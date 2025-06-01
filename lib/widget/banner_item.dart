@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:raya_mobile/app/network/api_utils.dart';
+import 'package:raya_mobile/repo/albums_repo.dart';
+import 'package:raya_mobile/repo/banners_repo.dart';
 
 class BannerItem extends StatefulWidget {
   BannerItem({super.key});
@@ -10,18 +13,38 @@ class BannerItem extends StatefulWidget {
 }
 
 class _BannerItemState extends State<BannerItem> {
+
+  final BannersRepo bannersRepo = BannersRepo();
+  var isLoading = true;
+
+
   int _current = 0;
   CarouselController _controller = CarouselController(initialItem: 1);
-  List<String> appBanners = [
-    'https://api.rayacreations.com/api/writable/uploads/images/banner/_5.jpg',
-    'https://api.rayacreations.com/api/writable/uploads/images/banner/_6.jpg',
-    'https://api.rayacreations.com/api/writable/uploads/images/banner/_7.jpg',
-    'https://api.rayacreations.com/api/writable/uploads/images/banner/_8.jpg'
-  ];
+  List<String> appBanners = [];
 
   @override
   void initState() {
     super.initState();
+    getBanners();
+  }
+
+  void getBanners() {
+    final result = bannersRepo.getBanners('HOME');
+    result.then((value) {
+      if (value.isSuccess && (value.data?.arrBanners.isNotEmpty ?? false)) {
+        setState(() {
+          final baseUrl = getEnvUrl();
+          appBanners = value.data!.arrBanners.map((e) => baseUrl + e.imagePath).toList();
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          appBanners = [];
+          isLoading = false;
+        });
+      }
+
+    });
   }
 
   @override

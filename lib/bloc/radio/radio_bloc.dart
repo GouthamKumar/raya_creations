@@ -8,6 +8,7 @@ class RadioPlayerBloc extends Bloc<RadioPlayerBaseEvent, RadioPlayerBaseState> {
   RadioPlayerBloc() : super(RadioPlayerInitState()) {
     on<RadioPlayerInitEvent>(initRadio);
     on<RadioPlayerEvent>(playRadio);
+    on<MusicPlayerEvent>(playMusic);
   }
 
   Future<void> initRadio(
@@ -18,8 +19,14 @@ class RadioPlayerBloc extends Bloc<RadioPlayerBaseEvent, RadioPlayerBaseState> {
   Future<void> playRadio(
       RadioPlayerBaseEvent event, Emitter<RadioPlayerBaseState> emit) async {
     emit(RadioPlayerState(
-        isRadioPlaying: !state.isRadioPlaying, metadata: null));
+        isRadioPlaying: !state.isRadioPlaying, isMusicPlaying: false, metadata: null));
     // listenServices(emit);
+  }
+
+  Future<void> playMusic(
+      MusicPlayerEvent event, Emitter<RadioPlayerBaseState> emit) async {
+    emit(RadioPlayerState(
+        isRadioPlaying: false, isMusicPlaying: event.isMusicPlaying, selectedSong: event.selectedSong, selectedAlbum: event.selectedAlbum, metadata: null));
   }
 
   void listenServices(Emitter<RadioPlayerBaseState> emit) {}

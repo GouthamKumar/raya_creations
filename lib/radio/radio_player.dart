@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:radio_player/radio_player.dart';
 
 final RadioPlayer _radioPlayer = RadioPlayer();
@@ -13,4 +14,17 @@ initRadioPlayer() async {
 
 RadioPlayer getRadioHandler() {
   return _radioPlayer;
+}
+
+final AudioPlayer _audioPlayer = AudioPlayer();
+
+initAudioPlayer(List<AudioSource> audioSources) async {
+  await _audioPlayer.setAudioSources(
+    audioSources, initialIndex: 0, initialPosition: Duration.zero,
+    shuffleOrder: DefaultShuffleOrder(), // Customise the shuffle algorithm
+  );
+}
+
+AudioPlayer getAudioHandler() {
+  return _audioPlayer;
 }

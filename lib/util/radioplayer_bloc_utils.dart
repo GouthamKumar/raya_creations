@@ -6,3 +6,11 @@ import 'package:raya_mobile/bloc/radio/radio_events.dart';
 void handleRadioPlay_Stop(BuildContext context) {
   context.read<RadioPlayerBloc>().add(RadioPlayerEvent());
 }
+
+void handleMusicPlayAndStop(BuildContext context, bool isMusicPlaying,
+    int selectedSong, String selectedAlbum) {
+  context.read<RadioPlayerBloc>().add(MusicPlayerEvent(
+      isMusicPlaying: isMusicPlaying,
+      selectedSong: selectedSong,
+      selectedAlbum: selectedAlbum));
+}

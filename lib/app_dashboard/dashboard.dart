@@ -4,6 +4,7 @@ import 'package:raya_mobile/about/about_screen.dart';
 import 'package:raya_mobile/bloc/radio/radio_bloc.dart';
 import 'package:raya_mobile/bloc/radio/radio_events.dart';
 import 'package:raya_mobile/home/home_screen.dart';
+import 'package:raya_mobile/podcast/podcast_screen.dart';
 import 'package:raya_mobile/util/AppColorPalette.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         controller: _controller,
         children: const [
           HomeScreen(),
-          //    PodcastPage(),
+          PodcastScreen(),
           AboutScreen(),
         ],
       ),
@@ -53,8 +54,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.radio_outlined), label: "Radio"),
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.podcasts_outlined), label: "Podcast"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.podcasts_outlined), label: "Podcast"),
           BottomNavigationBarItem(
               icon: Icon(Icons.info_outlined), label: "About"),
         ],
