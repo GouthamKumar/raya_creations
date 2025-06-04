@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             backgroundColor: AppColorPalette.appColorWhite,
             appBar: AppBar(
-              title: getAppBoldTextSize('Raya Creations', 22),
+              title: getAppBoldTextSize('RaYa Creations', 22),
             ),
             body: SingleChildScrollView(
               child: Container(
