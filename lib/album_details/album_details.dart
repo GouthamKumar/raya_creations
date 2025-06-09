@@ -68,6 +68,7 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
         ? getAudioHandler().pause()
         : getAudioHandler().play();
     handleMusicPlayAndStop(context, !state.isMusicPlaying, state.selectedSong, album?.name ?? '');
+    stopRadioPlayer();
   }
 
   void handlePreviousButton(RadioPlayerBaseState state) {
@@ -76,6 +77,7 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
       final selectedIndex = state.isMusicPlaying ? state.selectedSong - 1 : -1;
 
       handleMusicPlayAndStop(context, state.isMusicPlaying, selectedIndex, album?.name ?? '');
+      stopRadioPlayer();
     }
   }
 
@@ -84,6 +86,7 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     if (state.selectedSong < arrPodcasts.length - 1) {
       final selectedIndex = state.isMusicPlaying ? state.selectedSong + 1 : -1;
       handleMusicPlayAndStop(context, state.isMusicPlaying, selectedIndex, album?.name ?? '');
+      stopRadioPlayer();
     }
   }
 
@@ -92,6 +95,7 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     getAudioHandler().play();
     await getAudioHandler().seek(Duration.zero, index: selectedRow);
     handleMusicPlayAndStop(context, true, selectedRow, album?.name ?? '');
+    stopRadioPlayer();
   }
 
 
@@ -102,6 +106,10 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
       }
     }
     return album?.imagePath ?? '';
+  }
+
+  void stopRadioPlayer () {
+    getRadioHandler().stop();
   }
 
   @override

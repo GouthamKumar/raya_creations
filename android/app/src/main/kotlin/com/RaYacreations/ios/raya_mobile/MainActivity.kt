@@ -1,4 +1,4 @@
-package com.RaYacreations.ios.raya_mobile
+package com.raya.media
 
 import io.flutter.embedding.android.FlutterActivity
 

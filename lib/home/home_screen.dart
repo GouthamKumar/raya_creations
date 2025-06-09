@@ -60,6 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void stopAudioPlayer () {
+    getAudioHandler().stop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<RadioPlayerBloc, RadioPlayerBaseState>(
@@ -161,6 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ? getRadioHandler().pause()
         : getRadioHandler().play();
     handleRadioPlay_Stop(context);
+    stopAudioPlayer();
   }
 
   IconButton _button(IconData iconData, VoidCallback onPressed) => IconButton(
