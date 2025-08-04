@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raya_mobile/AudioRooms/audio_rooms.dart';
 import 'package:raya_mobile/about/about_screen.dart';
+import 'package:raya_mobile/audio/audio.dart';
 import 'package:raya_mobile/bloc/radio/radio_bloc.dart';
 import 'package:raya_mobile/bloc/radio/radio_events.dart';
 import 'package:raya_mobile/home/home_screen.dart';
@@ -43,6 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: const [
           HomeScreen(),
           PodcastScreen(),
+          AudioRooms(),
           AboutScreen(),
         ],
       ),
@@ -56,6 +59,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               icon: Icon(Icons.radio_outlined), label: "Radio"),
           BottomNavigationBarItem(
               icon: Icon(Icons.podcasts_outlined), label: "Podcast"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.mic_external_on_outlined), label: "Audio Rooms"),
           BottomNavigationBarItem(
               icon: Icon(Icons.info_outlined), label: "About"),
         ],

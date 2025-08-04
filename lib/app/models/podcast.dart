@@ -1,20 +1,17 @@
 class Podcast {
   Podcast({
     required this.podcastInfo,
-    required this.podcastTags,
+    // required this.podcastTags,
   });
 
   factory Podcast.fromJson(Map<String, dynamic> json) {
     return Podcast(
       podcastInfo: PodcastInfo.fromJson(json['info']),
-      podcastTags: (json['tags'] as List)
-          .map((i) => PodcastTags.fromJson(i as Map<String, dynamic>))
-          .toList(),
     );
   }
 
   final PodcastInfo podcastInfo;
-  final List<PodcastTags> podcastTags;
+  // final List<PodcastTags>? podcastTags;
 }
 
 class PodcastInfo {
