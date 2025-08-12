@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:raya_mobile/util/AppColorPalette.dart';
 import 'package:raya_mobile/util/app_constanta.dart';
+import 'package:raya_mobile/util/app_local_data.dart';
 import 'package:raya_mobile/utils/app_browser.dart';
 import 'package:raya_mobile/widget/app_divider.dart';
 import 'package:raya_mobile/widget/app_fonts.dart';
@@ -13,6 +14,33 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
+  bool isLoggedin = false;
+  String userName = '';
+  String mobile = '';
+
+  @override
+  void initState() {
+    super.initState();
+    validateUser();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  validateUser() async {
+    userName = await savedUserName() ?? '';
+    mobile = await savedUserPhone() ?? '';
+    isUserLoggedIn().then((value) {
+     if(value == GlobalValues.GLOBAL_CONST_YES) {
+       setState(() {
+         isLoggedin = true;
+
+       });
+     }});
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,14 +49,22 @@ class _AboutScreenState extends State<AboutScreen> {
           children: [
             getVerticalDivider(70),
             Center(
-                child: Image.asset(
-              "images/raya_logo.png",
-              height: 300,
-            )),
+              child: Image.asset(
+                "images/raya_logo.png",
+                height: 300,
+              ),
+            ),
+            if(isLoggedin)...[
+              const SizedBox(
+                height: 10,
+              ),
+              getAccountTile("name", userName, "mobile",
+                  mobile, Icons.verified_user),
+            ],
             const SizedBox(
               height: 10,
             ),
-            getAccountTile("Send mail", "contact@rayacreations.com", "mail",
+            getAccountTile("Send mail", "support@voiceofnri.com", "mail",
                 "Min. reply time : 2 hrs", Icons.mail),
             const SizedBox(
               height: 10,
@@ -54,7 +90,37 @@ class _AboutScreenState extends State<AboutScreen> {
             // ),
             // getAccountTile("", "Contact us", "wu", "Contact Customer care",
             //     Icons.contact_support),
+            // SizedBox(
+            //   height: 50,
+            // ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsetsGeometry.all(16),
+        child: InkWell(
+          onTap: (() => {
+            if(isLoggedin) {
+              clearPref().then((value) => {
+                setState(() {
+                  isLoggedin = false;
+                })
+              })
+            } else {
+              Navigator.pushNamed(context, '/signin')
+            }
+          }),
+          child: Container(
+            width: double.infinity,
+            height: 50,
+            decoration: BoxDecoration(
+              color: AppColorPalette.appBarColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: getAppSemiboldText( isLoggedin ? 'Logout' : 'Login', 18),
+            ),
+          ),
         ),
       ),
     );

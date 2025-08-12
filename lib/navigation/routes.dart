@@ -4,6 +4,8 @@ import 'package:raya_mobile/about/about_screen.dart';
 import 'package:raya_mobile/album_details/album_details.dart';
 import 'package:raya_mobile/app_dashboard/dashboard.dart';
 import 'package:raya_mobile/audio/audio.dart';
+import 'package:raya_mobile/auth/registration_screen.dart';
+import 'package:raya_mobile/auth/signin.dart';
 import 'package:raya_mobile/home/home_screen.dart';
 import 'package:raya_mobile/podcast/podcast_screen.dart';
 
@@ -15,6 +17,8 @@ class RootConstants {
   static const String albumDetails = '/albumDetails';
   static  const String audio = '/audio';
   static const String audioRooms = '/audioRooms';
+  static const String signIn = '/signin';
+  static const String register = '/register';
 }
 
 Map<String, WidgetBuilder> routes = {
@@ -25,4 +29,6 @@ Map<String, WidgetBuilder> routes = {
   RootConstants.albumDetails: (_) => AlbumDetailsScreen(),
   RootConstants.audio: (_) => Audio(),
   RootConstants.audioRooms: (_) => AudioRooms(),
+  RootConstants.signIn: (_) => SignInView(),
+  RootConstants.register: (_) => RegistrationScreen(),
 };

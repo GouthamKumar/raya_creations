@@ -48,7 +48,7 @@ class _PodcastScreenState extends State<PodcastScreen> {
     return Scaffold(
       backgroundColor: AppColorPalette.appColorWhite,
       appBar: AppBar(
-        title: getAppBoldTextSize('RaYa Creations', 22),
+        title: getAppBoldTextSize('Voice of NRI', 22),
       ),
       body: Container(
         margin: const EdgeInsets.all(15),

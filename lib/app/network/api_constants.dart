@@ -1,7 +1,8 @@
-const sandboxEnv = 'https://api.rayacreations.com/';
-const prodEnv = 'https://api.rayacreations.com/';
+const sandboxEnv = 'https://api.voicesofnri.com/';
+const prodEnv = 'https://api.voicesofnri.com/';
 
 const isProdEnv = false;
+const userRoleId = '5';
 
 const authorization = 'Authorization';
 const accept = 'Accept';
@@ -11,6 +12,10 @@ const apiAccessKeyValue = 'A31AB78E-C4C7-4C9E-AD98-6D6A1B801E45';
 const pathAlbums = 'Album/list';
 const pathPodcasts = 'Poadcast/list?albumId=';
 const pathBannersList = 'Banner/list?type=';
+const pathCheckUser = 'Auth/checkUser';
+const pathLoginUser = 'Auth/login';
+const pathRegisterUser = 'Auth/addUser';
+const pathAudioRoomList = 'AudioRooms/getAll';
 
 const connectionTimeout = 60000;
 const receiveTimeout = 60000;
@@ -44,6 +49,10 @@ enum RequestType {
   getPodcastAlbums,
   getPodCasts,
   getBanners,
+  postCheckUser,
+  postRegisterUser,
+  postLoginUser,
+  getAudios,
   getError,
 }
 

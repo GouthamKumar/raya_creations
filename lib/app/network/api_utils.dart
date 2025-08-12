@@ -20,17 +20,16 @@ String getUrl(RequestType type, dynamic data, dynamic paramsData) {
       return pathBannersList + type;
       case RequestType.getError:
         return '';
+    case RequestType.postCheckUser:
+      return pathCheckUser;
+    case RequestType.postLoginUser:
+      return pathLoginUser;
+    case RequestType.postRegisterUser:
+      return pathRegisterUser;
+    case RequestType.getAudios:
+      return pathAudioRoomList;
   }
 }
-
-// Future<String> checkDeviceId() async {
-//   String deviceId = SkuManager().getDeviceId();
-//   if (deviceId.isEmpty) {
-//     deviceId = await DeviceIdRepo().fetchDeviceId();
-//     SkuManager().setDeviceId(deviceId);
-//   }
-//   return deviceId;
-// }
 
 String getEnvUrl() {
   if (!isProdEnv) {

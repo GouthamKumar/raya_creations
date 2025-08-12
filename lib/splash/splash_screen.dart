@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raya_mobile/bloc/bottom_tab/bloc.dart';
+import 'package:raya_mobile/bloc/bottom_tab/events.dart';
+import 'package:raya_mobile/bloc/bottom_tab/states.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -11,13 +15,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // Timer(const Duration(seconds: 5), () {
-    //   // context.read<RadioPlayerBloc>().add(RadioPlayerInitEvent());
-    //   Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (BuildContext buildContext) => const DashboardScreen()));
-    // });
   }
 
   @override

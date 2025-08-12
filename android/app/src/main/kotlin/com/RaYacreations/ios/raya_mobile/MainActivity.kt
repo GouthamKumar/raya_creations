@@ -1,4 +1,4 @@
-package com.raya.media
+package com.androidapp.voiceofnri
 
 import io.flutter.embedding.android.FlutterActivity
 
