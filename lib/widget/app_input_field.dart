@@ -68,7 +68,7 @@ TextField appInputFieldUnderLine(labelTxt, hintTxt, controller, type, int limit,
     decoration: InputDecoration(
       border: const UnderlineInputBorder(),
       focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColorPalette.appColorRed),
+        borderSide: BorderSide(color: AppColorPalette.appPrimary),
       ),
       labelText: hintTxt,
       counterText: "",

@@ -45,8 +45,8 @@ class MiniMusicVisualizer extends StatelessWidget {
             duration: duration[index % 5],
             // color: color ?? Theme.of(context).colorScheme.secondary,
             color: index % 2 == 0
-                ? AppColorPalette.appBarColor
-                : AppColorPalette.appSecondaryColor,
+                ? AppColorPalette.appPrimary
+                : Colors.white70,
             width: width,
             height: height,
             radius: radius,

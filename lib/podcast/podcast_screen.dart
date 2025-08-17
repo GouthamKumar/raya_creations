@@ -46,9 +46,14 @@ class _PodcastScreenState extends State<PodcastScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorPalette.appColorWhite,
+      backgroundColor: AppColorPalette.appSecondaryColor,
       appBar: AppBar(
-        title: getAppBoldTextSize('Voice of NRI', 22),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Image.asset(
+          'images/appbar_logo_white.png',
+          fit: BoxFit.fill,
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.all(15),

@@ -52,7 +52,7 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
   }
 
   void handleMusicPlayer() {
-    if(audioSources.isEmpty) {
+    if (audioSources.isEmpty) {
       for (final podcast in arrPodcasts) {
         audioSources.add(
             AudioSource.uri(Uri.parse(podcast.podcastInfo.podcastUrl ?? '')));
@@ -67,7 +67,8 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     state.isMusicPlaying == true
         ? getAudioHandler().pause()
         : getAudioHandler().play();
-    handleMusicPlayAndStop(context, !state.isMusicPlaying, state.selectedSong, album?.name ?? '');
+    handleMusicPlayAndStop(
+        context, !state.isMusicPlaying, state.selectedSong, album?.name ?? '');
     stopRadioPlayer();
   }
 
@@ -76,7 +77,8 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     if (state.selectedSong > 0) {
       final selectedIndex = state.isMusicPlaying ? state.selectedSong - 1 : -1;
 
-      handleMusicPlayAndStop(context, state.isMusicPlaying, selectedIndex, album?.name ?? '');
+      handleMusicPlayAndStop(
+          context, state.isMusicPlaying, selectedIndex, album?.name ?? '');
       stopRadioPlayer();
     }
   }
@@ -85,7 +87,8 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     getAudioHandler().seekToNext();
     if (state.selectedSong < arrPodcasts.length - 1) {
       final selectedIndex = state.isMusicPlaying ? state.selectedSong + 1 : -1;
-      handleMusicPlayAndStop(context, state.isMusicPlaying, selectedIndex, album?.name ?? '');
+      handleMusicPlayAndStop(
+          context, state.isMusicPlaying, selectedIndex, album?.name ?? '');
       stopRadioPlayer();
     }
   }
@@ -98,17 +101,18 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     stopRadioPlayer();
   }
 
-
   String getBannerImage(RadioPlayerBaseState state) {
     if (state.isMusicPlaying == true) {
       if (state.selectedAlbum == album?.name) {
-        return state.selectedSong >= 0 ? arrPodcasts[state.selectedSong].podcastInfo.imagePath ?? '' : album?.imagePath ?? '';
+        return state.selectedSong >= 0
+            ? arrPodcasts[state.selectedSong].podcastInfo.imagePath ?? ''
+            : album?.imagePath ?? '';
       }
     }
     return album?.imagePath ?? '';
   }
 
-  void stopRadioPlayer () {
+  void stopRadioPlayer() {
     getRadioHandler().stop();
   }
 
@@ -130,6 +134,7 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
     }, child: BlocBuilder<RadioPlayerBloc, RadioPlayerBaseState>(
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: AppColorPalette.appSecondaryColor,
           appBar: AppBar(
             title: getAppRegularHeaderText(album?.name ?? 'Album details'),
             centerTitle: true,
@@ -189,13 +194,16 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
                   child: Container(
                     height: 80,
                     width: 80,
-                    child: ClipRRect ( borderRadius: BorderRadius.circular(8.0), child: CachedNetworkImage(
-                      imageUrl: podcast.podcastInfo.imagePath ?? '',
-                      placeholder: (context, url) => Icon(Icons.filter_drama),
-                      errorWidget: (context, url, error) =>
-                          Icon(Icons.filter_drama),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: CachedNetworkImage(
+                        imageUrl: podcast.podcastInfo.imagePath ?? '',
+                        placeholder: (context, url) => Icon(Icons.filter_drama),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.filter_drama),
+                      ),
                     ),
-                  ),),
+                  ),
                 ),
                 Expanded(
                   child: Column(
@@ -230,21 +238,23 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
                 )
               ],
             ),
-            if (state.isMusicPlaying && state.selectedSong == index && state.selectedAlbum == album?.name) ...[
+            if (state.isMusicPlaying &&
+                state.selectedSong == index &&
+                state.selectedAlbum == album?.name) ...[
               Positioned(
                 left: 5,
                 bottom: 20,
                 child: SizedBox(
                   width: 100,
                   child: MiniMusicVisualizer(
-                    color: AppColorPalette.appBarColor,
+                    color: AppColorPalette.appPrimary,
                     width: 2,
                     height: 20,
                     radius: 2,
                     animate: true,
                     barCount: 15,
                     shadows: [
-                      BoxShadow(color: AppColorPalette.appBarColor),
+                      BoxShadow(color: AppColorPalette.appSecondaryColor),
                       BoxShadow(color: Colors.black)
                     ],
                   ),
@@ -259,16 +269,24 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
 
   Widget createMusicPlayer(RadioPlayerBaseState state) {
     return Container(
+      height: 260,
       child: Stack(
         children: [
           Column(children: [
-            arrPodcasts.isNotEmpty ? CachedNetworkImage(
-              height: 180,
-              imageUrl: getBannerImage(state),
-              placeholder: (context, url) => Icon(Icons.cloud_off_outlined),
-              errorWidget: (context, url, error) =>
-                  Icon(Icons.cloud_off_outlined),
-            ) : Image.asset("images/raya_logo.png", height: 180,),
+            arrPodcasts.isNotEmpty
+                ? CachedNetworkImage(
+                    height: 150,
+                    imageUrl: getBannerImage(state),
+                    placeholder: (context, url) =>
+                        Icon(Icons.cloud_off_outlined),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.cloud_off_outlined),
+                  )
+                : Image.asset(
+                    "images/raya_logo.png",
+                    color: AppColorPalette.appBgColor,
+                    height: 150,
+                  ),
             SizedBox(
               height: 8,
             ),
@@ -276,24 +294,31 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
               children: [
                 Spacer(),
                 IconButton.outlined(
+                  color: AppColorPalette.appBgColor,
                     iconSize: 40,
                     onPressed: () => {handlePreviousButton(state)},
-                    icon: Icon(Icons.arrow_left)),
+                    icon: Icon(Icons.arrow_left, color: AppColorPalette.appBgColor,)),
                 Spacer(),
                 IconButton.outlined(
+                  color: AppColorPalette.appBgColor,
                     iconSize: 40,
                     onPressed: () => {handlePlayButton(state)},
-                    icon: (state.isMusicPlaying && state.selectedAlbum == album?.name)
-                        ? Icon(Icons.pause)
-                        : Icon(Icons.play_arrow)),
+                    icon: (state.isMusicPlaying &&
+                            state.selectedAlbum == album?.name)
+                        ? Icon(Icons.pause, color: AppColorPalette.appBgColor,)
+                        : Icon(Icons.play_arrow, color: AppColorPalette.appBgColor,)),
                 Spacer(),
                 IconButton.outlined(
+                  color: AppColorPalette.appBgColor,
                     iconSize: 40,
                     onPressed: () => {handleForwardButton(state)},
-                    icon: Icon(Icons.arrow_right)),
+                    icon: Icon(Icons.arrow_right, color: AppColorPalette.appBgColor,)),
                 Spacer(),
               ],
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
           ])
         ],
       ),

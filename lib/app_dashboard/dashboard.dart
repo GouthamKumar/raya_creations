@@ -57,8 +57,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: AppColorPalette.appSecondaryColor,
-          selectedItemColor: AppColorPalette.appBarColor,
-          unselectedItemColor: AppColorPalette.appColorWhite,
+          selectedItemColor: AppColorPalette.appPrimary,
+          unselectedItemColor: AppColorPalette.appBgColor,
+          selectedLabelStyle: TextStyle(color: AppColorPalette.appBgColor),
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(

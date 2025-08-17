@@ -157,7 +157,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   CircleAvatar(
                                     radius: 30,
                                     backgroundColor:
-                                        AppColorPalette.appColorGreen,
+                                        AppColorPalette.appPrimary,
                                     child: IconButton(
                                         color: Colors.white,
                                         onPressed: () {

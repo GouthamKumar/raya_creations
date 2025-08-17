@@ -44,6 +44,15 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColorPalette.appSecondaryColor,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Image.asset(
+          'images/appbar_logo_white.png',
+          fit: BoxFit.fill,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -114,11 +123,11 @@ class _AboutScreenState extends State<AboutScreen> {
             width: double.infinity,
             height: 50,
             decoration: BoxDecoration(
-              color: AppColorPalette.appBarColor,
+              color: AppColorPalette.appPrimary,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: getAppSemiboldText( isLoggedin ? 'Logout' : 'Login', 18),
+              child: getAppSemiboldTextColor( isLoggedin ? 'Logout' : 'Login', 18, AppColorPalette.appBgColor),
             ),
           ),
         ),

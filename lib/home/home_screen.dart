@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void stopAudioPlayer () {
+  void stopAudioPlayer() {
     getAudioHandler().stop();
   }
 
@@ -78,9 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
       child: BlocBuilder<RadioPlayerBloc, RadioPlayerBaseState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: AppColorPalette.appColorWhite,
+            backgroundColor: AppColorPalette.appSecondaryColor,
             appBar: AppBar(
-              title: getAppBoldTextSize('Voice of NRI', 22),
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              title: Image.asset(
+                'images/appbar_logo_white.png',
+                fit: BoxFit.fill,
+              ),
             ),
             body: SingleChildScrollView(
               child: Container(
@@ -93,49 +98,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: const Color.fromARGB(255, 72, 87, 112),
+                        color: Colors.black45,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 10),
-                          FutureBuilder(
-                            future: getRadioHandler().getArtworkImage(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              Image artwork;
-                              if (snapshot.hasData) {
-                                artwork = snapshot.data;
-                              } else {
-                                artwork = Image.asset(
-                                  'images/raya_logo.png',
-                                  fit: BoxFit.cover,
-                                );
-                              }
-                              return SizedBox(
-                                height: 180,
-                                width: 180,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: artwork,
-                                ),
-                              );
-                            },
+                          SizedBox(
+                            height: 20,
                           ),
+                          Image.asset(
+                            'images/radio.png',
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(height: 10),
                           if (state.isRadioPlaying)
                             SizedBox(
                               width: 200,
                               child: MiniMusicVisualizer(
-                                color: AppColorPalette.appBarColor,
+                                color: AppColorPalette.appPrimary,
                                 width: 4,
                                 height: 70,
                                 radius: 2,
                                 animate: true,
                                 barCount: 30,
                                 shadows: [
-                                  BoxShadow(color: AppColorPalette.appBarColor),
-                                  BoxShadow(color: Colors.black)
+                                  BoxShadow(color: AppColorPalette.appPrimary),
+                                  BoxShadow(
+                                      color: AppColorPalette.appSecondaryColor),
                                 ],
                               ),
                             ),
@@ -146,6 +136,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               () => playButtonHandler(state)),
                           SizedBox(height: 20),
                         ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    getAppBoldTextSizeColor(
+                        'Radio Schedule', 18, AppColorPalette.appBgColor),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset(
+                        'images/radio_banner.png',
+                        fit: BoxFit.fill,
                       ),
                     )
                   ],
@@ -171,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
   IconButton _button(IconData iconData, VoidCallback onPressed) => IconButton(
         icon: Icon(
           iconData,
-          color: AppColorPalette.appBarColor,
+          color: AppColorPalette.appPrimary,
         ),
         iconSize: 70.0,
         onPressed: onPressed,

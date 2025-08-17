@@ -75,7 +75,12 @@ flutter:
   uses-material-design: true
   assets:
     - images/raya_logo.png
+    - images/appbar_logo.png
+    - images/swaram_placeholder.png
+    - images/radio_banner.png
     - images/fader_bg.jpg
+    - images/radio.png
+    - images/appbar_logo_white.png
     - assets/config/config.json
 
   # To add assets to your application, add an assets section, like this:

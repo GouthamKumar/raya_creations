@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:raya_mobile/AudioRooms/widgets/audio_room_row.dart';
 import 'package:raya_mobile/app/models/aduio_room.dart';
 import 'package:raya_mobile/repo/audio_repo.dart';
+import 'package:raya_mobile/util/AppColorPalette.dart';
 import 'package:raya_mobile/widget/app_fonts.dart';
 
 class AudioRooms extends StatefulWidget {
@@ -36,9 +37,14 @@ class _AudioRoomsState extends State<AudioRooms> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColorPalette.appSecondaryColor,
       appBar: AppBar(
-        title: getAppBoldTextSize('Audio Rooms', 22),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Image.asset(
+          'images/appbar_logo_white.png',
+          fit: BoxFit.fill,
+        ),
       ),
       body: Container(
         child: audioRooms.isNotEmpty ?

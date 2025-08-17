@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:raya_mobile/app/network/api_utils.dart';
 import 'package:raya_mobile/repo/albums_repo.dart';
 import 'package:raya_mobile/repo/banners_repo.dart';
+import 'package:raya_mobile/util/AppColorPalette.dart';
 
 class BannerItem extends StatefulWidget {
   BannerItem({super.key});
@@ -13,10 +14,8 @@ class BannerItem extends StatefulWidget {
 }
 
 class _BannerItemState extends State<BannerItem> {
-
   final BannersRepo bannersRepo = BannersRepo();
   var isLoading = true;
-
 
   int _current = 0;
   CarouselController _controller = CarouselController(initialItem: 1);
@@ -34,7 +33,8 @@ class _BannerItemState extends State<BannerItem> {
       if (value.isSuccess && (value.data?.arrBanners.isNotEmpty ?? false)) {
         setState(() {
           final baseUrl = getEnvUrl();
-          appBanners = value.data!.arrBanners.map((e) => baseUrl + e.imagePath).toList();
+          appBanners =
+              value.data!.arrBanners.map((e) => baseUrl + e.imagePath).toList();
           isLoading = false;
         });
       } else {
@@ -43,7 +43,6 @@ class _BannerItemState extends State<BannerItem> {
           isLoading = false;
         });
       }
-
     });
   }
 
@@ -61,11 +60,11 @@ class _BannerItemState extends State<BannerItem> {
                           fadeOutDuration: const Duration(milliseconds: 2),
                           fit: BoxFit.fitWidth,
                           width: MediaQuery.of(context).size.width,
-                          placeholder: AssetImage('images/raya_logo.png'),
+                          placeholder: AssetImage('images/swaram_placeholder.png'),
                           image: NetworkImage(item),
                           imageErrorBuilder: (context, error, stackTrace) {
                             return Image.asset(
-                              'images/raya_logo.png',
+                              'images/swaram_placeholder.png',
                               fit: BoxFit.fitWidth,
                               width: MediaQuery.of(context).size.width,
                             );

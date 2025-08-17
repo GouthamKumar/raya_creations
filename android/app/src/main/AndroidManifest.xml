@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 
     <application
-        android:label="Voice of NRI"
+        android:label="The Swaram"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

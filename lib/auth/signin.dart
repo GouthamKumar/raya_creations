@@ -170,7 +170,9 @@ class _SignInViewState extends State<SignInView> {
 
   void saveResp() {
     saveUser(userResponse!.result!);
-    context.read<BottomTabBloc>().add(BottomTabChangeEvent(tab: BottomTab.radio));
+    context
+        .read<BottomTabBloc>()
+        .add(BottomTabChangeEvent(tab: BottomTab.radio));
     Navigator.of(context).popUntil(ModalRoute.withName('/'));
   }
 
@@ -206,8 +208,7 @@ class _SignInViewState extends State<SignInView> {
                 height: 10,
               ),
               Container(
-                padding: const EdgeInsets.all(6.0),
-                margin: const EdgeInsets.only(left: 25, right: 25, top: 10),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Container(
@@ -253,7 +254,7 @@ class _SignInViewState extends State<SignInView> {
                         margin: const EdgeInsets.symmetric(horizontal: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
-                          color: AppColorPalette.appBarColor,
+                          color: AppColorPalette.appPrimary,
                         ),
                         child: const Text(
                           'Continue',
@@ -294,7 +295,7 @@ class _SignInViewState extends State<SignInView> {
                 ],
               ),
               Container(
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -318,64 +319,76 @@ class _SignInViewState extends State<SignInView> {
                     const SizedBox(
                       height: 30,
                     ),
-                    PinCodeTextField(
-                      appContext: context,
-                      pastedTextStyle: const TextStyle(
-                        color: AppColorPalette.appColorGreen,
-                        fontWeight: FontWeight.bold,
+                    // PinCodeTextField(
+                    //   appContext: context,
+                    //   pastedTextStyle: const TextStyle(
+                    //     color: AppColorPalette.appSecondaryColor,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    //   length: 6,
+                    //   obscureText: false,
+                    //   blinkWhenObscuring: true,
+                    //   animationType: AnimationType.fade,
+                    //   validator: (v) {
+                    //     if (v!.length < 6) {
+                    //       return "Not Valid OTP";
+                    //     } else {
+                    //       return null;
+                    //     }
+                    //   },
+                    //   pinTheme: PinTheme(
+                    //     shape: PinCodeFieldShape.underline,
+                    //     // borderRadius: BorderRadius.circular(10),
+                    //     borderWidth: 0.5,
+                    //     fieldHeight: 40,
+                    //     fieldWidth: 40,
+                    //     activeFillColor: Colors.white,
+                    //     inactiveFillColor: Colors.white,
+                    //     inactiveColor: AppColorPalette.appPrimary,
+                    //     selectedFillColor: Colors.white,
+                    //     activeColor: AppColorPalette.appPrimary,
+                    //     selectedColor: AppColorPalette.appPrimary,
+                    //   ),
+                    //   cursorColor: Colors.black,
+                    //   animationDuration: const Duration(milliseconds: 50),
+                    //   enableActiveFill: true,
+                    //   // errorAnimationController: errorController,
+                    //   controller: otpEditingController,
+                    //   keyboardType: TextInputType.number,
+                    //   boxShadows: const [
+                    //     BoxShadow(
+                    //       offset: Offset(0, 1),
+                    //       color: Colors.black12,
+                    //       blurRadius: 2,
+                    //     )
+                    //   ],
+                    //   onCompleted: (v) {
+                    //     debugPrint("Completed");
+                    //   },
+                    //   // onTap: () {
+                    //   //   print("Pressed");
+                    //   // },
+                    //   onChanged: (value) {
+                    //     debugPrint(value);
+                    //   },
+                    //   beforeTextPaste: (text) {
+                    //     debugPrint("Allowing to paste $text");
+                    //     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                    //     //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                    //     return true;
+                    //   },
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: TextField(
+                        controller: otpEditingController,
+                        textAlign: TextAlign.center,
+                        maxLength: 6,
+
                       ),
-                      length: 6,
-                      obscureText: false,
-                      blinkWhenObscuring: true,
-                      animationType: AnimationType.fade,
-                      validator: (v) {
-                        if (v!.length < 6) {
-                          return "Not Valid OTP";
-                        } else {
-                          return null;
-                        }
-                      },
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.underline,
-                        // borderRadius: BorderRadius.circular(10),
-                        borderWidth: 0.5,
-                        fieldHeight: 40,
-                        fieldWidth: 40,
-                        activeFillColor: Colors.white,
-                        inactiveFillColor: Colors.white,
-                        inactiveColor: AppColorPalette.appColorGreen,
-                        selectedFillColor: Colors.white,
-                        activeColor: AppColorPalette.appColorGreen,
-                        selectedColor: AppColorPalette.appColorGreen,
-                      ),
-                      cursorColor: Colors.black,
-                      animationDuration: const Duration(milliseconds: 50),
-                      enableActiveFill: true,
-                      // errorAnimationController: errorController,
-                      controller: otpEditingController,
-                      keyboardType: TextInputType.number,
-                      boxShadows: const [
-                        BoxShadow(
-                          offset: Offset(0, 1),
-                          color: Colors.black12,
-                          blurRadius: 2,
-                        )
-                      ],
-                      onCompleted: (v) {
-                        debugPrint("Completed");
-                      },
-                      // onTap: () {
-                      //   print("Pressed");
-                      // },
-                      onChanged: (value) {
-                        debugPrint(value);
-                      },
-                      beforeTextPaste: (text) {
-                        debugPrint("Allowing to paste $text");
-                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                        return true;
-                      },
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     Center(
                       child: GestureDetector(
@@ -415,7 +428,7 @@ class _SignInViewState extends State<SignInView> {
                               margin: const EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5.0),
-                                color: AppColorPalette.appColorGreen,
+                                color: AppColorPalette.appPrimary,
                               ),
                               child: const Text(
                                 'Verify & Continue',
