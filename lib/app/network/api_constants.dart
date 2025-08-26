@@ -16,6 +16,8 @@ const pathCheckUser = 'Auth/checkUser';
 const pathLoginUser = 'Auth/login';
 const pathRegisterUser = 'Auth/addUser';
 const pathAudioRoomList = 'AudioRooms/getAll';
+const pathAudioRoomParticipants = 'AudioRooms/getAudioRoomParticipants';
+const pathUserInfo = 'User/info?id=';
 
 const connectionTimeout = 60000;
 const receiveTimeout = 60000;
@@ -52,7 +54,9 @@ enum RequestType {
   postCheckUser,
   postRegisterUser,
   postLoginUser,
+  getUserInfo,
   getAudios,
+  getParticipants,
   getError,
 }
 

@@ -58,7 +58,7 @@ class _BannerItemState extends State<BannerItem> {
                         child: FadeInImage(
                           fadeInDuration: const Duration(milliseconds: 2),
                           fadeOutDuration: const Duration(milliseconds: 2),
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.fill,
                           width: MediaQuery.of(context).size.width,
                           placeholder: AssetImage('images/swaram_placeholder.png'),
                           image: NetworkImage(item),
@@ -73,6 +73,7 @@ class _BannerItemState extends State<BannerItem> {
                       ))
                   .toList(),
               options: CarouselOptions(
+
                 enlargeCenterPage: true,
                 autoPlay: true,
                 scrollPhysics: const ScrollPhysics(),
@@ -100,7 +101,7 @@ class _BannerItemState extends State<BannerItem> {
                         shape: BoxShape.circle,
                         color: (_current == index)
                             ? const Color(0xffF04D6B)
-                            : Colors.black26),
+                            : AppColorPalette.appBgColor),
                   );
                 },
               ).toList(),

@@ -7,8 +7,8 @@ plugins {
 }
 
 android {
-    namespace = "com.androidapp.voiceofnri"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "com.swaram.androidapp"
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -20,15 +20,19 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.androidapp.voiceofnri"
+        applicationId = "com.swaram.androidapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 23
-        targetSdk = flutter.targetSdkVersion
-        versionCode = 4
-        versionName = "1.0.3"
+        targetSdk = 36
+        versionCode = 5
+        versionName = "1.0.5"
     }
 
     buildTypes {
@@ -45,6 +49,6 @@ flutter {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:34.0.0')
+    implementation platform('com.google.firebase:firebase-bom:34.1.0')
     implementation 'com.google.firebase:firebase-analytics'
 }

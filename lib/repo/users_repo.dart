@@ -24,7 +24,7 @@ class UsersRepo {
           'password': reverseStringUsingCodeUnits(mobileNumber),
           'name': name,
           'email': email,
-          'role_id': userRoleId,
+          'role_id': '5',
           'status': 'ACTIVE',
           'token': 'xyz'
         });
@@ -39,6 +39,16 @@ class UsersRepo {
           'username': mobileNumber,
           'password': reverseStringUsingCodeUnits(mobileNumber),
           'role_id': userRoleId,
+        });
+    return response.toResult();
+  }
+
+  Future<Result<UserResponse>> getUserInfo(String userId) async {
+    final response = await apiRepository.performRequest<UserResponse>(
+        requestType: RequestType.getUserInfo,
+        requestMethod: RequestMethod.get,
+        data: {
+          'id': userId,
         });
     return response.toResult();
   }

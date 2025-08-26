@@ -23,7 +23,21 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: AppColorPalette.appSecondaryColor,
       body: Center(
-        child: Image.asset("images/raya_logo.png"),
+        child: FittedBox(
+          fit: BoxFit.fill,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                  100.0), // Set corner radius to 10.0
+              color:
+              AppColorPalette.appSecondaryColor, // Set background color
+            ),
+            child: Image.asset(
+              "images/raya_logo.png",
+              height: 200,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -16,5 +16,5 @@ class AppColorPalette {
   static const Color appPrimary = Color(0xFFbf352d);
   static const Color appBgColor = Color(0xffffffff);
   // static const Color buttonColor = Color(0xff);
-  static const Color appSecondaryColor = Color(0xff424242);
+  static const Color appSecondaryColor = Color(0xff191c27);
 }

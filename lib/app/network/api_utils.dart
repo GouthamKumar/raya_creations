@@ -28,6 +28,11 @@ String getUrl(RequestType type, dynamic data, dynamic paramsData) {
       return pathRegisterUser;
     case RequestType.getAudios:
       return pathAudioRoomList;
+    case RequestType.getParticipants:
+      return pathAudioRoomParticipants;
+    case RequestType.getUserInfo:
+      final userId = data['id'];
+      return pathUserInfo+userId;
   }
 }
 

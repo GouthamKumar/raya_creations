@@ -8,6 +8,7 @@ class AppPrefVariables {
   static String USER_NAME = 'userName';
   static String USER_PHONE = 'userPhone';
   static String USER_MAIL = 'userMail';
+  static String USER_ROLE = 'userRole';
 }
 
 class GlobalValues {
@@ -43,6 +44,7 @@ saveUserDetails(User user) async {
   await sharedPreferences.setString(AppPrefVariables.USER_NAME, user.name);
   await sharedPreferences.setString(AppPrefVariables.USER_PHONE, user.phone ?? '');
   await sharedPreferences.setString(AppPrefVariables.USER_MAIL, user.email ?? '');
+  await sharedPreferences.setString(AppPrefVariables.USER_ROLE, user.role_id ?? '');
 }
 
 loginStatus(String status) async {
@@ -80,4 +82,9 @@ Future<String?> savedUserPhone()  async {
 Future<String?> savedUserMail()  async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return  prefs.getString(AppPrefVariables.USER_MAIL);
+}
+
+Future<String?> savedUserRole()  async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return  prefs.getString(AppPrefVariables.USER_ROLE)??"";
 }

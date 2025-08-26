@@ -39,8 +39,7 @@ class _AudioRoomsState extends State<AudioRooms> {
     return Scaffold(
       backgroundColor: AppColorPalette.appSecondaryColor,
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColorPalette.appSecondaryColor,
         title: Image.asset(
           'images/appbar_logo_white.png',
           fit: BoxFit.fill,

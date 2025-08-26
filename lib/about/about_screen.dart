@@ -33,24 +33,23 @@ class _AboutScreenState extends State<AboutScreen> {
     userName = await savedUserName() ?? '';
     mobile = await savedUserPhone() ?? '';
     isUserLoggedIn().then((value) {
-     if(value == GlobalValues.GLOBAL_CONST_YES) {
-       setState(() {
-         isLoggedin = true;
-
-       });
-     }});
+      if (value == GlobalValues.GLOBAL_CONST_YES) {
+        setState(() {
+          isLoggedin = true;
+        });
+      }
+    });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColorPalette.appSecondaryColor,
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColorPalette.appSecondaryColor,
         title: Image.asset(
           'images/appbar_logo_white.png',
-          fit: BoxFit.fill,
+          
         ),
       ),
       body: SingleChildScrollView(
@@ -58,50 +57,32 @@ class _AboutScreenState extends State<AboutScreen> {
           children: [
             getVerticalDivider(70),
             Center(
-              child: Image.asset(
-                "images/raya_logo.png",
-                height: 300,
+              child: Icon(
+                Icons.account_circle_rounded,
+                color: Colors.white,
+                size: 100,
               ),
             ),
-            if(isLoggedin)...[
+            if (isLoggedin) ...[
               const SizedBox(
                 height: 10,
               ),
-              getAccountTile("name", userName, "mobile",
-                  mobile, Icons.verified_user),
+              getAppRegularTextColor(userName, 16, AppColorPalette.appBgColor),
+              getAppRegularTextColor(mobile, 16, AppColorPalette.appBgColor),
             ],
             const SizedBox(
               height: 10,
             ),
-            getAccountTile("Send mail", "support@voiceofnri.com", "mail",
-                "Min. reply time : 2 hrs", Icons.mail),
+            if (isLoggedin) ...[
+              getAccountRow(
+                  'Edit Profile', 'update', Icons.account_circle_rounded),
+            ],
+            getAccountRow('About Us', 'au', Icons.newspaper),
+            getAccountRow('Terms & Conditions', 'tc', Icons.policy),
+            getAccountRow('Privacy Policy', 'pp', Icons.privacy_tip),
             const SizedBox(
               height: 10,
             ),
-            // getAccountTile("", "Terms & Conditions", "tc",
-            //     "Products,Orders,Delivery and Payments", Icons.rule_folder),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // getAccountTile(
-            //     "",
-            //     "Privacy Policy",
-            //     "pp",
-            //     "App data privacy,security and usage",
-            //     Icons.privacy_tip_rounded),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // getAccountTile(
-            //     "", "About us", "au", "About Application", Icons.info_outline),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // getAccountTile("", "Contact us", "wu", "Contact Customer care",
-            //     Icons.contact_support),
-            // SizedBox(
-            //   height: 50,
-            // ),
           ],
         ),
       ),
@@ -109,16 +90,17 @@ class _AboutScreenState extends State<AboutScreen> {
         padding: EdgeInsetsGeometry.all(16),
         child: InkWell(
           onTap: (() => {
-            if(isLoggedin) {
-              clearPref().then((value) => {
-                setState(() {
-                  isLoggedin = false;
-                })
-              })
-            } else {
-              Navigator.pushNamed(context, '/signin')
-            }
-          }),
+                if (isLoggedin)
+                  {
+                    clearPref().then((value) => {
+                          setState(() {
+                            isLoggedin = false;
+                          })
+                        })
+                  }
+                else
+                  {Navigator.pushNamed(context, '/signin')}
+              }),
           child: Container(
             width: double.infinity,
             height: 50,
@@ -127,7 +109,8 @@ class _AboutScreenState extends State<AboutScreen> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: getAppSemiboldTextColor( isLoggedin ? 'Logout' : 'Login', 18, AppColorPalette.appBgColor),
+              child: getAppSemiboldTextColor(isLoggedin ? 'Logout' : 'Login',
+                  18, AppColorPalette.appBgColor),
             ),
           ),
         ),
@@ -156,18 +139,45 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
+  getAccountRow(String tittle, String option, IconData icon) {
+    return Padding(
+      padding: EdgeInsets.only(left: 8),
+      child: Material(
+        color: AppColorPalette.appSecondaryColor,
+        child: InkWell(
+          onTap: () {
+            navigateScreen(option);
+          },
+          child: ListTile(
+            title:
+                getAppRegularTextColor(tittle, 16, AppColorPalette.appBgColor),
+            leading: SizedBox(
+              height: double.infinity,
+              child: Icon(icon, color: AppColorPalette.appBgColor),
+            ),
+            trailing:
+                Icon(Icons.chevron_right, color: AppColorPalette.appBgColor),
+          ),
+        ),
+      ),
+    );
+  }
+
   void navigateScreen(String option) {
     switch (option) {
       // case "mail":
       //   sendMail();
       //   break;
+      case "update":
+        Navigator.pushNamed(context, '/userDetails');
+        break;
 
       case "tc":
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => const AppBrowserPage(
-                    url: "https://www.rayacreations.com/terms",
+                    url: "https://the-swaram.com/#terms",
                     title: "Terms & Conditions")));
         break;
       case "pp":
@@ -175,7 +185,7 @@ class _AboutScreenState extends State<AboutScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => const AppBrowserPage(
-                    url: "https://www.rayacreations.com/",
+                    url: "https://the-swaram.com/#privacy",
                     title: "Privacy Policy")));
         break;
       case "au":
@@ -183,7 +193,7 @@ class _AboutScreenState extends State<AboutScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => const AppBrowserPage(
-                    url: "https://rayacreations.com/#aboutUs",
+                    url: "https://the-swaram.com/#home",
                     title: "About Us")));
         break;
       case "wu":

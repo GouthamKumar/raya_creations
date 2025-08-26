@@ -1,4 +1,4 @@
-package com.androidapp.voiceofnri
+package com.swaram.androidapp
 
 import io.flutter.embedding.android.FlutterActivity
 

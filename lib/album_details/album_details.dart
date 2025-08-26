@@ -137,7 +137,6 @@ class _AlbumDetailsScreenState extends State<AlbumDetailsScreen> {
           backgroundColor: AppColorPalette.appSecondaryColor,
           appBar: AppBar(
             title: getAppRegularHeaderText(album?.name ?? 'Album details'),
-            centerTitle: true,
           ),
           body: Container(
             padding: const EdgeInsets.all(8),

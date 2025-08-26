@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "638895405461",
-    "project_id": "voice-of-nri",
-    "storage_bucket": "voice-of-nri.firebasestorage.app"
+    "project_number": "324608950379",
+    "project_id": "swaram-f1634",
+    "storage_bucket": "swaram-f1634.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:638895405461:android:0761c5060e0bfa3f5b9e9c",
+        "mobilesdk_app_id": "1:324608950379:android:bdb12cc6a1f7393a4bb12e",
         "android_client_info": {
-          "package_name": "com.androidapp.voiceofnri"
+          "package_name": "com.swaram.androidapp"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCXlsGlAa10EWmqWhzIxoMUb6GsiyuVdU8"
+          "current_key": "AIzaSyDc-Q_tZGoBQOf5Tvb3C1GuaSRabhKXx_8"
         }
       ],
       "services": {

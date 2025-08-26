@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raya_mobile/AudioRooms/audio_rooms.dart';
+import 'package:raya_mobile/UserDetails/user_details.dart';
 import 'package:raya_mobile/about/about_screen.dart';
 import 'package:raya_mobile/album_details/album_details.dart';
 import 'package:raya_mobile/app_dashboard/dashboard.dart';
@@ -19,6 +20,7 @@ class RootConstants {
   static const String audioRooms = '/audioRooms';
   static const String signIn = '/signin';
   static const String register = '/register';
+  static const String userDetails = '/userDetails';
 }
 
 Map<String, WidgetBuilder> routes = {
@@ -31,4 +33,5 @@ Map<String, WidgetBuilder> routes = {
   RootConstants.audioRooms: (_) => AudioRooms(),
   RootConstants.signIn: (_) => SignInView(),
   RootConstants.register: (_) => RegistrationScreen(),
+  RootConstants.userDetails: (_) => UserDetails(),
 };

@@ -185,6 +185,7 @@ class _SignInViewState extends State<SignInView> {
 
   Widget loginUI() {
     return Scaffold(
+      backgroundColor: AppColorPalette.appSecondaryColor,
       body: Center(
         child: Form(
           key: _formKey,
@@ -197,9 +198,17 @@ class _SignInViewState extends State<SignInView> {
                 children: [
                   FittedBox(
                     fit: BoxFit.fill,
-                    child: Image.asset(
-                      "images/raya_logo.png",
-                      height: 300,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Set corner radius to 10.0
+                        color:
+                            AppColorPalette.appBgColor, // Set background color
+                      ),
+                      child: Image.asset(
+                        "images/raya_logo.png",
+                        height: 200,
+                      ),
                     ),
                   ),
                 ],
@@ -211,6 +220,15 @@ class _SignInViewState extends State<SignInView> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsGeometry.only(left: 10),
+                          child: getAppRegularTextColor(
+                              'Phone Number', 12, AppColorPalette.appBgColor),
+                        )
+                      ],
+                    ),
                     Container(
                       padding: const EdgeInsets.only(
                           left: 10, right: 10, top: 1, bottom: 1),
@@ -220,7 +238,7 @@ class _SignInViewState extends State<SignInView> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5))),
                       child: InternationalPhoneNumberInput(
-                        cursorColor: Colors.black,
+                        cursorColor: Colors.white,
                         onInputChanged: (PhoneNumber number) {
                           phoneNumber = number.phoneNumber;
                           phoneNumberRegister = number.parseNumber();
@@ -233,8 +251,9 @@ class _SignInViewState extends State<SignInView> {
                         ),
                         spaceBetweenSelectorAndTextField: 0,
                         ignoreBlank: false,
+                        textStyle: TextStyle(color: Colors.white),
                         autoValidateMode: AutovalidateMode.disabled,
-                        selectorTextStyle: const TextStyle(color: Colors.black),
+                        selectorTextStyle: const TextStyle(color: Colors.white),
                         initialValue: PhoneNumber(isoCode: 'US'),
                         formatInput: false,
                         keyboardType: TextInputType.phone,
@@ -277,6 +296,7 @@ class _SignInViewState extends State<SignInView> {
 
   Widget otpUI() {
     return Scaffold(
+      backgroundColor: AppColorPalette.appSecondaryColor,
       body: Center(
         child: Form(
           key: _formKey,
@@ -288,8 +308,17 @@ class _SignInViewState extends State<SignInView> {
                 children: [
                   FittedBox(
                     fit: BoxFit.fill,
-                    child: Image.asset(
-                      "images/raya_logo.png",
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Set corner radius to 10.0
+                        color:
+                            AppColorPalette.appBgColor, // Set background color
+                      ),
+                      child: Image.asset(
+                        "images/raya_logo.png",
+                        height: 200,
+                      ),
                     ),
                   ),
                 ],
@@ -302,89 +331,28 @@ class _SignInViewState extends State<SignInView> {
                       height: 5,
                     ),
                     getAppRegularTextColor(
-                        "You'll receive an OTP on", 16, Colors.black),
-                    getAppBoldTextSizeColor("$phoneNumber", 16, Colors.black),
-                    /*Text.rich(
-                    TextSpan(
-                        text: 'number : ',
-                        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0,),
-                        children: [
-                          TextSpan(
-                            text: phoneNumber,
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        ]
-                    ),
-                  ),*/
+                        "You'll receive an OTP on", 16, AppColorPalette.appBgColor),
+                    getAppBoldTextSizeColor("$phoneNumber", 16, AppColorPalette.appBgColor),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
-                    // PinCodeTextField(
-                    //   appContext: context,
-                    //   pastedTextStyle: const TextStyle(
-                    //     color: AppColorPalette.appSecondaryColor,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    //   length: 6,
-                    //   obscureText: false,
-                    //   blinkWhenObscuring: true,
-                    //   animationType: AnimationType.fade,
-                    //   validator: (v) {
-                    //     if (v!.length < 6) {
-                    //       return "Not Valid OTP";
-                    //     } else {
-                    //       return null;
-                    //     }
-                    //   },
-                    //   pinTheme: PinTheme(
-                    //     shape: PinCodeFieldShape.underline,
-                    //     // borderRadius: BorderRadius.circular(10),
-                    //     borderWidth: 0.5,
-                    //     fieldHeight: 40,
-                    //     fieldWidth: 40,
-                    //     activeFillColor: Colors.white,
-                    //     inactiveFillColor: Colors.white,
-                    //     inactiveColor: AppColorPalette.appPrimary,
-                    //     selectedFillColor: Colors.white,
-                    //     activeColor: AppColorPalette.appPrimary,
-                    //     selectedColor: AppColorPalette.appPrimary,
-                    //   ),
-                    //   cursorColor: Colors.black,
-                    //   animationDuration: const Duration(milliseconds: 50),
-                    //   enableActiveFill: true,
-                    //   // errorAnimationController: errorController,
-                    //   controller: otpEditingController,
-                    //   keyboardType: TextInputType.number,
-                    //   boxShadows: const [
-                    //     BoxShadow(
-                    //       offset: Offset(0, 1),
-                    //       color: Colors.black12,
-                    //       blurRadius: 2,
-                    //     )
-                    //   ],
-                    //   onCompleted: (v) {
-                    //     debugPrint("Completed");
-                    //   },
-                    //   // onTap: () {
-                    //   //   print("Pressed");
-                    //   // },
-                    //   onChanged: (value) {
-                    //     debugPrint(value);
-                    //   },
-                    //   beforeTextPaste: (text) {
-                    //     debugPrint("Allowing to paste $text");
-                    //     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                    //     //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                    //     return true;
-                    //   },
-                    // ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsGeometry.only(left: 10),
+                          child: getAppRegularTextColor(
+                              'Please enter OTP', 12, AppColorPalette.appBgColor),
+                        )
+                      ],
+                    ),
                     Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.only(left: 10, right: 10),
                       child: TextField(
                         controller: otpEditingController,
-                        textAlign: TextAlign.center,
                         maxLength: 6,
-
+                        cursorColor: AppColorPalette.appBgColor,
+                        style: TextStyle(color: AppColorPalette.appBgColor),
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                     SizedBox(
@@ -398,12 +366,13 @@ class _SignInViewState extends State<SignInView> {
                           style: TextStyle(
                             fontSize: 15,
                             letterSpacing: 0.688,
+                            color: AppColorPalette.appBgColor,
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     GestureDetector(
                       onTap: () => {

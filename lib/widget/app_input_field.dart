@@ -171,24 +171,18 @@ TextField appInputFieldDoneHeight(labelTxt, hintTxt, controller, type) {
 TextField appInputFieldError(labelTxt, hintTxt, controller, type,String? error) {
   // bool showError = _submitted && !widget.emailValidator.isValid(value);
   return TextField(
-    cursorColor: Colors.black38,
     decoration: InputDecoration(
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black, width: 1.0),
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey, width: 1.0),
-      ),errorBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.black38, width: 1.0),
-    ),
-      focusedErrorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black38, width: 1.0),
-      ),
-      labelText: hintTxt,
-      labelStyle: const TextStyle(color: Colors.black),
-      //hintText: hintTxt,
-      // hintStyle: const TextStyle(color: Colors.black),
-      errorText: error,
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: AppColorPalette.appBgColor, width: 1.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey, width: 1.0),
+        ),
+        labelText: hintTxt,
+        labelStyle: const TextStyle(color: AppColorPalette.appBgColor),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red, width: 1.0),
+        )
     ),
     // focusNode: _emailFocusNode,
     controller: controller,
@@ -196,6 +190,8 @@ TextField appInputFieldError(labelTxt, hintTxt, controller, type,String? error) 
     textInputAction: TextInputAction.next,
     keyboardType: type,
     obscureText: false,
+    cursorColor: AppColorPalette.appBgColor,
+    style: TextStyle(color: AppColorPalette.appBgColor),
     // onEditingComplete: _onEmailEditingDone,
     onChanged: (value)=>{
       if(value.isNotEmpty){
@@ -214,7 +210,7 @@ TextField appInputFieldMultiline(labelTxt, hintTxt, controller, type,String? err
 
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 1.0),
+            borderSide: BorderSide(color: AppColorPalette.appBgColor, width: 1.0),
           ),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 1.0),
@@ -249,16 +245,15 @@ TextField appInputFieldMultiline(labelTxt, hintTxt, controller, type,String? err
 
 TextField appInputFieldMail(labelTxt, hintTxt, controller, type) {
   return TextField(
-    cursorColor: Colors.black38,
     decoration: InputDecoration(
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black, width: 1.0),
+          borderSide: BorderSide(color: AppColorPalette.appBgColor, width: 1.0),
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey, width: 1.0),
         ),
         labelText: hintTxt,
-        labelStyle: const TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(color: AppColorPalette.appBgColor),
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black38, width: 1.0),
         )
@@ -268,6 +263,8 @@ TextField appInputFieldMail(labelTxt, hintTxt, controller, type) {
     autocorrect: false,
     textInputAction: TextInputAction.next,
     keyboardType: type,
+    cursorColor: AppColorPalette.appBgColor,
+    style: TextStyle(color: AppColorPalette.appBgColor),
     obscureText: false,
     // onEditingComplete: _onEmailEditingDone,
     onChanged: (value)=>{
@@ -343,13 +340,13 @@ TextField appDisabledInputField(labelTxt, hintTxt, controller, type) {
   return TextField(
     decoration: InputDecoration(
       focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black, width: 1.0),
+        borderSide: BorderSide(color: Colors.white70, width: 1.0),
       ),
       enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+        borderSide: BorderSide(color: Colors.white70, width: 1.0),
       ),
       labelText: hintTxt,
-      labelStyle: const TextStyle(color: Colors.black),
+      labelStyle: const TextStyle(color: AppColorPalette.appBgColor),
       //hintText: hintTxt,
       // hintStyle: const TextStyle(color: Colors.black),
       // errorText: showError ? 'Can\'t be Empty' : null,
@@ -363,6 +360,8 @@ TextField appDisabledInputField(labelTxt, hintTxt, controller, type) {
     readOnly: true,
     enableInteractiveSelection: false,
     enabled: false,
+    cursorColor: AppColorPalette.appBgColor,
+    style: TextStyle(color: AppColorPalette.appBgColor),
     // onTap: ()=>{
     //   onTap('Data')
     // },

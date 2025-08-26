@@ -52,6 +52,7 @@ dependencies:
   intl_phone_number_input: ^0.7.4
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.5.3
+  sticky_headers: ^0.3.0+2
 
 dev_dependencies:
   flutter_test:
@@ -75,7 +76,6 @@ flutter:
   uses-material-design: true
   assets:
     - images/raya_logo.png
-    - images/appbar_logo.png
     - images/swaram_placeholder.png
     - images/radio_banner.png
     - images/fader_bg.jpg

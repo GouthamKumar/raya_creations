@@ -67,7 +67,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     if (result.isSuccess) {
       saveUser(result.data!.result!);
       Navigator.of(context).popUntil(ModalRoute.withName('/'));
-      context.read<BottomTabBloc>().add(BottomTabChangeEvent(tab: BottomTab.radio));
+      context
+          .read<BottomTabBloc>()
+          .add(BottomTabChangeEvent(tab: BottomTab.radio));
     } else {
       displaySnackBar(
           result.error?.message ?? 'Unable to register user. Please try again.',
@@ -98,18 +100,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           // )
           // ,
           child: Scaffold(
-            backgroundColor: Colors.transparent,
+            backgroundColor: AppColorPalette.appSecondaryColor,
             appBar: AppBar(
-              backgroundColor: Colors.transparent,
               elevation: 0,
               title: getAppRegularText("Signup", 18),
             ),
             body: Stack(
               children: [
-                Container(
-                  height: 140,
-                  child: Center(child: Image.asset('images/raya_logo.png')),
-                ),
                 SingleChildScrollView(
                   child: Container(
                     padding: EdgeInsets.only(
@@ -117,6 +114,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Center(
+                          child: FittedBox(
+                            fit: BoxFit.fill,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    100.0), // Set corner radius to 10.0
+                                color:
+                                AppColorPalette.appBgColor, // Set background color
+                              ),
+                              child: Image.asset(
+                                "images/raya_logo.png",
+                                height: 200,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Container(
                           margin: const EdgeInsets.only(left: 25, right: 25),
                           child: Column(
@@ -143,31 +160,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    '',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w700),
+                              InkWell(
+                                onTap: (() => {registerUser()}),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: AppColorPalette.appPrimary,
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor:
-                                        AppColorPalette.appPrimary,
-                                    child: IconButton(
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          registerUser();
-                                        },
-                                        icon: const Icon(
-                                          Icons.arrow_forward,
-                                        )),
-                                  )
-                                ],
+                                  child: Center(
+                                    child: getAppSemiboldTextColor('Continue',
+                                        18, AppColorPalette.appBgColor),
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 height: 40,

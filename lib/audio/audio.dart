@@ -7,7 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:raya_mobile/app/models/aduio_room.dart';
+import 'package:raya_mobile/app/models/room_user_data.dart';
+import 'package:raya_mobile/app/models/user.dart';
+import 'package:raya_mobile/app/network/api_constants.dart';
+import 'package:raya_mobile/repo/audio_repo.dart';
+import 'package:raya_mobile/repo/users_repo.dart';
+import 'package:raya_mobile/util/AppColorPalette.dart';
 import 'package:raya_mobile/util/app_local_data.dart';
+import 'package:raya_mobile/widget/app_fonts.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class Audio extends StatefulWidget {
   const Audio({super.key});
@@ -18,14 +26,20 @@ class Audio extends StatefulWidget {
 
 class _AudioState extends State<Audio> {
   late RtcEngine engine;
-  List<int> remoteUids = [];
+  List<User?> arrAudienceis = [];
   bool joined = false;
   bool isBroadcaster = true;
   bool muted = false;
   bool cameraOff = false;
   AudioRoom? config;
   String userId = '';
-
+  String userRole = '';
+  List<String> listHeader = [
+    'Participants',
+    'Audience',
+  ];
+  final UsersRepo usersRepo = UsersRepo();
+  List<User?> arrParticipants = [];
 
   @override
   void initState() {
@@ -34,12 +48,56 @@ class _AudioState extends State<Audio> {
     Timer(Duration(seconds: 1), () {
       initAgora();
     });
-
   }
 
   getSavedData() async {
     userId = await savedUserId() ?? '0';
+    userRole = await savedUserRole() ?? '4';
+    setState(() {});
   }
+
+  void getUserInfo(String userId) async {
+    final userInfo = await usersRepo.getUserInfo(userId);
+    if (userInfo.data?.result != null) {
+      final user = userInfo.data?.result;
+      if (user?.role_id == '4') {
+        setState(() {
+          arrParticipants.add(user);
+        });
+      } else {
+        setState(() {
+          arrAudienceis.add(user);
+        });
+      }
+    }
+  }
+
+  void removeUser(String userId) {
+    for (final user in arrAudienceis) {
+      if (user?.id == userId) {
+        setState(() {
+          arrAudienceis.remove(user);
+        });
+      }
+    }
+
+    for (final user in arrParticipants) {
+      if (user?.id == userId) {
+        setState(() {
+          arrAudienceis.remove(user);
+        });
+      }
+    }
+  }
+
+  // void getRoomParticipants() async {
+  //   final roomResult = await audioRoomsRepo.getParticipantsByRoomId(config?.id ?? '1');
+  //   if (roomResult.data?.result?.roomUsers != null) {
+  //     setState(() {
+  //       participants = roomResult.data?.result?.roomUsers ?? [];
+  //     });
+  //   }
+  // }
 
   // Requests microphone permission
   Future<void> requestPermissions() async {
@@ -49,7 +107,7 @@ class _AudioState extends State<Audio> {
   // Set up the Agora RTC engine instance
   Future<void> initializeAgoraVoiceSDK(String appId) async {
     engine = createAgoraRtcEngine();
-    await engine.initialize( RtcEngineContext(
+    await engine.initialize(RtcEngineContext(
       appId: appId,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     ));
@@ -60,15 +118,17 @@ class _AudioState extends State<Audio> {
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           debugPrint('Local user ${connection.localUid} joined');
+          getUserInfo('${connection.localUid}');
           setState(() => joined = true);
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           debugPrint("Remote user $remoteUid joined");
-          setState(() => remoteUids.add(remoteUid));
+          getUserInfo('$remoteUid');
         },
-        onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
+        onUserOffline: (RtcConnection connection, int remoteUid,
+            UserOfflineReasonType reason) {
           debugPrint("Remote user $remoteUid left");
-          setState(() => remoteUids.remove(remoteUid));
+          removeUser('$remoteUid');
         },
       ),
     );
@@ -79,10 +139,13 @@ class _AudioState extends State<Audio> {
       token: token,
       channelId: channel,
       options: const ChannelMediaOptions(
-        autoSubscribeAudio: true, // Automatically subscribe to all audio streams
+        autoSubscribeAudio:
+            true, // Automatically subscribe to all audio streams
         publishMicrophoneTrack: true, // Publish microphone-captured audio
         // Use clientRoleBroadcaster to act as a host or clientRoleAudience for audience
-        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        clientRoleType: userRoleId == '4'
+            ? ClientRoleType.clientRoleBroadcaster
+            : ClientRoleType.clientRoleAudience,
       ),
       uid: uid,
     );
@@ -91,49 +154,14 @@ class _AudioState extends State<Audio> {
   Future<void> initAgora() async {
     final appId = 'a2362899740a483d999ddee8b5f06e48';
     final channelName = config?.title ?? ''; //'genAITalk'; //
-    final token = config?.agora_token ?? ''; //'007eJxTYJB6ES5ytdOP8fw0mfnbFO+3Jeeds5rTVWiefTlxk7X58mIFhkQjYzMjC0tLcxODRBML4xRLS8uUlNRUiyTTNAOzVBOLLI7ZGQ2BjAwvSsVYGRkgEMTnZEhPzXP0DEnMyWZgAACP6B+p'; //
+    final token = config?.agora_token ??
+        ''; //'007eJxTYJB6ES5ytdOP8fw0mfnbFO+3Jeeds5rTVWiefTlxk7X58mIFhkQjYzMjC0tLcxODRBML4xRLS8uUlNRUiyTTNAOzVBOLLI7ZGQ2BjAwvSsVYGRkgEMTnZEhPzXP0DEnMyWZgAACP6B+p'; //
     final uid = int.parse(userId);
 
     await requestPermissions();
     await initializeAgoraVoiceSDK(appId);
     setupEventHandlers();
     await joinChannel(token, channelName, uid);
-
-    //
-    // engine = createAgoraRtcEngine();
-    // await engine.initialize(RtcEngineContext(appId: appId, channelProfile: ChannelProfileType.channelProfileCommunication));
-    //
-    // engine.registerEventHandler(RtcEngineEventHandler(
-    //   onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-    //     print('Local user ${connection.localUid} joined');
-    //     setState(() => joined = true);
-    //   },
-    //   onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
-    //
-    //   },
-    //   onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
-    //
-    //   },
-    // ));
-    //
-    // await engine.setChannelProfile(ChannelProfileType.channelProfileLiveBroadcasting);
-    // await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    //
-    // await engine.enableVideo();
-    //
-    // await engine.joinChannel(
-    //   token: token,
-    //   channelId: channelName,
-    //   uid: uid,
-    //   options: const ChannelMediaOptions(
-    //       autoSubscribeVideo: false,
-    //       autoSubscribeAudio: true,
-    //       publishCameraTrack: false,
-    //       publishMicrophoneTrack: true,
-    //       clientRoleType: ClientRoleType.clientRoleBroadcaster,
-    //       audienceLatencyLevel:
-    //       AudienceLatencyLevelType.audienceLatencyLevelUltraLowLatency),
-    // );
   }
 
   void onToggleMute() {
@@ -149,7 +177,9 @@ class _AudioState extends State<Audio> {
   void onSwitchRole() async {
     setState(() => isBroadcaster = !isBroadcaster);
     await engine.setClientRole(
-      role: isBroadcaster ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+      role: isBroadcaster
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
     );
   }
 
@@ -157,7 +187,7 @@ class _AudioState extends State<Audio> {
     await engine.leaveChannel();
     setState(() {
       joined = false;
-      remoteUids.clear();
+      arrAudienceis.clear();
     });
     Navigator.pop(context);
   }
@@ -181,55 +211,70 @@ class _AudioState extends State<Audio> {
     );
   }
 
-  // Widget _buildVideoGrid() {
-  //   final views = <Widget>[];
-  //   if (_isBroadcaster && _joined) views.add(_localView());
-  //   for (var uid in _remoteUids) {
-  //     views.add(_videoView(uid));
-  //   }
-  //
-  //   return GridView.builder(
-  //     itemCount: views.length,
-  //     padding: EdgeInsets.all(8),
-  //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //       crossAxisCount: views.length <= 2 ? 1 : 2,
-  //       mainAxisSpacing: 8,
-  //       crossAxisSpacing: 8,
-  //     ),
-  //     itemBuilder: (context, index) => Container(
-  //       decoration: BoxDecoration(border: Border.all(color: Colors.black54)),
-  //       child: views[index],
-  //     ),
-  //   );
-  // }
-
   Widget buildUserGrid() {
-    final users = [0, ...remoteUids]; // Include local user (0)
-    return GridView.builder(
-      itemCount: users.length,
-      padding: EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-      ),
-      itemBuilder: (context, index) {
-        final uid = users[index];
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.blueGrey.shade100,
-            borderRadius: BorderRadius.circular(12),
+    final audienceList =
+        arrAudienceis; // Include local user (0) // userRole == '5' ? [0, ...arrAudienceis] :
+    final participantsList =
+        arrParticipants; // Include local user (0) // userRole == '4' ? [0, ...arrParticipants] :
+    return ListView.builder(
+      itemCount: 2,
+      itemBuilder: (context, listIndex) {
+        return StickyHeader(
+          header: Container(
+            height: 38.0,
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            alignment: Alignment.centerLeft,
+            child: getAppBoldTextSizeColor(
+                listHeader[listIndex], 18, AppColorPalette.appBgColor),
           ),
-          child: Center(
-            child: Text(
-              uid == 0 ? 'You' : 'User $uid',
-              style: TextStyle(fontSize: 18),
+          content: Container(
+            child: GridView.builder(
+              itemCount:
+                  listIndex == 0 ? arrParticipants.length : audienceList.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(16),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+              ),
+              itemBuilder: (context, index) {
+                if (listIndex == 0) {
+                  final participant = participantsList[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.shade100,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: getAppRegularText(participant?.name ?? '', 13),
+                    ),
+                  );
+                } else {
+                  final uid = audienceList[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.shade100,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: getAppRegularText(uid?.name ?? '', 13),
+                    ),
+                  );
+                }
+              },
             ),
           ),
         );
       },
+      shrinkWrap: true,
     );
   }
+
+  /*
+
+   */
 
   Widget buildToolbar() {
     if (!isBroadcaster) return SizedBox.shrink();
@@ -241,6 +286,9 @@ class _AudioState extends State<Audio> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            // if(userRole == '4')...[
+            //
+            // ],
             FloatingActionButton(
               onPressed: onToggleMute,
               backgroundColor: muted ? Colors.red : Colors.white,
@@ -275,7 +323,8 @@ class _AudioState extends State<Audio> {
         padding: const EdgeInsets.all(12.0),
         child: ElevatedButton(
           onPressed: onSwitchRole,
-          child: Text(isBroadcaster ? 'Switch to Audience' : 'Become Broadcaster'),
+          child:
+              Text(isBroadcaster ? 'Switch to Audience' : 'Become Broadcaster'),
         ),
       ),
     );
@@ -292,16 +341,21 @@ class _AudioState extends State<Audio> {
   Widget build(BuildContext context) {
     if (config == null) {
       config = ModalRoute.of(context)?.settings.arguments as AudioRoom;
+      // getRoomParticipants();
     }
     return Scaffold(
-      appBar: AppBar(title: Text('Agora Group Live Stream')),
-      body: Stack(
+      backgroundColor: AppColorPalette.appSecondaryColor,
+      appBar: AppBar(title: Text(config?.title ?? '')),
+      body: (arrParticipants.isNotEmpty || arrAudienceis.isNotEmpty)
+          ? Stack(
         children: [
+          // getAppBoldTextSizeColor( , 16, AppColorPalette.appBgColor),
+          // SizedBox(height: 20,),
           buildUserGrid(),
           buildToolbar(),
           // _buildSwitchRole(),
         ],
-      ),
+      ) : const Center(child: CircularProgressIndicator( color: Colors.white,)) ,
     );
   }
 }
